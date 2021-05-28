@@ -20,21 +20,18 @@ contract NewbCoin {
 		balances[tx.origin] = 10000;
 	}
 
-	function sendCoin(address _receiver, uint _amount) public returns(bool sufficient) {
-		if (balances[msg.sender] < _amount) 
-			return false;
+	function sendCoin(address _receiver, uint _amount) public {
+		require(balances[msg.sender] > _amount, "The senders balance must be more than the amount requested to send");
 
 		balances[msg.sender] -= _amount;
 
 		// tax mechanic here for every transaction, removes the percentage specified in 'uint tax'
-		uint _removed = 0;
-		(_amount, _removed) = _taxTransaction(_amount);
-		_burn(_removed); // Currently does nothing
+		//uint _removed = 0;
+		//(_amount, _removed) = _taxTransaction(_amount);
+		//_burn(_removed); // Currently does nothing
 		balances[_receiver] += _amount;
 		
 		emit Transfer(msg.sender, _receiver, _amount);
-		
-		return true;
 	}
 
 	function getBalanceInEth(address _addr) public view returns(uint) {
@@ -52,8 +49,7 @@ contract NewbCoin {
 	}
 
 	function _burn(uint amount) private returns(bool) {
-		if (tax == 0) 
-			return false;
+		require(tax == 0, "Tax value should not equal 0");
 
 		// todo: do we just burn this and 0x0 the amount? Or add it elsewhere
 		emit TaxBurn(amount);

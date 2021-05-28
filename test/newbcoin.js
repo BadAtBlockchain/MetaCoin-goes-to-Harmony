@@ -51,6 +51,8 @@ contract('NewbCoin', (accounts) => {
     assert.notEqual(tax, 0, "Tax value returned 0");
 
     assert.equal(accountOneEndingBalance, accountOneStartingBalance - amount, "Amount wasn't correctly taken from the sender");
-    assert.equal(accountTwoEndingBalance, accountTwoStartingBalance + afterTax, "Amount wasn't correctly sent to the receiver");
+    //assert.equal(accountTwoEndingBalance, accountTwoStartingBalance + afterTax, "Amount wasn't correctly sent to the receiver");
+    assert.equal(accountTwoEndingBalance, accountTwoStartingBalance + amount, "Amount wasn't correctly sent to the receiver");
+  
   });
 });
