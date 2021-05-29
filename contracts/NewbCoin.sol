@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.25 <0.7.0;
+pragma solidity ^0.8.0;
 
 import "./ConvertLib.sol";
 
@@ -16,7 +16,7 @@ contract NewbCoin {
 	event TransactionTax(uint _preTax, uint _postTax, uint _tax);
 	event TaxBurn(uint _amount);
 
-	constructor() public {
+	constructor() {
 		balances[tx.origin] = 10000;
 	}
 
